@@ -39,7 +39,7 @@ console.log(compiler)
     "userArguments": "-O3",
     "executeParameters": {
         "args": ["arg1", "arg2"],
-        "stdin": "hello, world!"
+        "stdin": document.getElementById("stdin").value,
     },
     "compilerOptions": {
         "executorRequest": true
