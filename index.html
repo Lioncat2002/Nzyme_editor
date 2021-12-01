@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="lib/codemirror.js"></script>
+    <link rel="stylesheet" href="lib/codemirror.css">
+     <!-- Compiled and minified CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+     <!-- Compiled and minified JavaScript -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+             
+    <title>Document</title>
+</head>
+<body>
+    <div class="card">
+        <div class="card-content">
+            <label for="Language">Language</label>
+            <select id="lang">
+                <option value="0" selected>C</option>
+                <option value="1">C++</option>
+                <option value="2">Python</option>
+                <option value="3">Fortran</option>
+         
+              </select>
+            <textarea name="" style="min-height: 1000px;" id="area"></textarea>
+            <button class="waves-effect waves-light btn" onclick="check()">Check</button>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-content">
+            <div class="card-title">
+                Console
+            </div>
+                <div id="console">
+
+                </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('select');
+  var instances = M.FormSelect.init(elems, {});
+});
+    </script>
+    
+<script src="./js/executor.js" charset="utf-8"></script>
+</body>
+</html>
