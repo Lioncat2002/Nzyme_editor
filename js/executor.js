@@ -5,7 +5,7 @@ var editor = CodeMirror.fromTextArea(document.getElementById("area"), {
   const params=new URL(window.location.href)
 
   var txt=params.searchParams.get("query")
-  var l=params.searchParams.get("lang")
+  var l=params.searchParams.get("lang")?params.searchParams.get("lang"):-1
   document.getElementById("lang").value=l
   editor.getDoc().setValue(txt?decodeURIComponent(txt):'');
   
@@ -70,38 +70,41 @@ var editor = CodeMirror.fromTextArea(document.getElementById("area"), {
 },
 "allowStoreCodeDebug": true
 }
-    fetch(`https://gcc.godbolt.org/api/compiler/${compiler}/compile`,
-    {
-        headers : { 
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
-   },
-        method:"POST",
-        body:JSON.stringify(data)
-    }
-    ).then((res)=>
-        res.json()
-    )
-    .then((data)=>{
-        console.log(data)
-        if(data.code==0){
-            document.getElementById("console").innerText=`${data.stdout[0].text}`
-        }
-        else {
+    if(lang!=-1){
+                fetch(`https://gcc.godbolt.org/api/compiler/${compiler}/compile`,
+            {
+                headers : { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+                },
+                method:"POST",
+                body:JSON.stringify(data)
+            }
+            ).then((res)=>
+                res.json()
+            )
+            .then((data)=>{
+                console.log(data)
+                if(data.code==0){
+                    document.getElementById("console").innerText=`${data.stdout[0].text}`
+                }
+                else {
                     if(data.buildResult.stderr){
                         for(var i=0;i<data.buildResult.stderr.length;i++){
                             document.getElementById("console").innerText+=`${data.buildResult.stderr[i].text}\n`
                         }
-                    }else{
-                        for(var i=0;i<data.stderr.length;i++){
-                            document.getElementById("console").innerText+=`${data.stderr[i].text}\n`
+                        }else{
+                            for(var i=0;i<data.stderr.length;i++){
+                                document.getElementById("console").innerText+=`${data.stderr[i].text}\n`
+                            }
                         }
-                    }
-           
-           
-            
-        }
-        
-    })
+                
+                
+                    
+                }
+                
+            })
+    }
+
    
   }
