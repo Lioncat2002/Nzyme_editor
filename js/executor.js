@@ -2,7 +2,25 @@ var editor = CodeMirror.fromTextArea(document.getElementById("area"), {
     lineNumbers: true,
     
   });
+  const params=new URL(window.location.href)
+
+  var txt=params.searchParams.get("query")
+  var l=params.searchParams.get("lang")
+  document.getElementById("lang").value=l
+  editor.getDoc().setValue(txt?decodeURIComponent(txt):'');
   
+  function share(){
+        var s=editor.getValue()
+        const urlParams = new URLSearchParams(window.location.search);
+
+        urlParams.set('query', window.encodeURI( s));
+        urlParams.set('lang',document.getElementById("lang").value)
+        document.getElementById('url').value=window.location.origin+window.location.pathname+'?'+urlParams
+        //window.location.search = urlParams;
+
+        navigator.clipboard.writeText(window.location.origin+window.location.pathname+'?'+urlParams)
+        alert("Copied to clipboard")
+}
 
   let compiler;
   function check(){
@@ -28,9 +46,7 @@ var editor = CodeMirror.fromTextArea(document.getElementById("area"), {
        
             break;
     }
-    
-console.log(lang)
-console.log(compiler)
+
 
     let data={
 "source": editor.getValue(),
