@@ -1,7 +1,10 @@
 var editor = CodeMirror.fromTextArea(document.getElementById("area"), {
     lineNumbers: true,
+    styleActiveLine: true,
+    matchBrackets: true
     
   });
+  editor.setOption("theme","dracula")
   const params=new URL(window.location.href)
 
   var txt=params.searchParams.get("query")
@@ -108,3 +111,5 @@ var editor = CodeMirror.fromTextArea(document.getElementById("area"), {
 
    
   }
+
+ 
