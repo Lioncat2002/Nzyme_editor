@@ -10,13 +10,13 @@ var editor = CodeMirror.fromTextArea(document.getElementById("area"), {
   var txt=params.searchParams.get("query")
   var l=params.searchParams.get("lang")?params.searchParams.get("lang"):-1
   document.getElementById("lang").value=l
-  editor.getDoc().setValue(txt?decodeURIComponent(txt):'');
+  editor.getDoc().setValue(txt?window.atob(txt):'');
   
   function share(){
         var s=editor.getValue()
         const urlParams = new URLSearchParams(window.location.search);
 
-        urlParams.set('query', window.encodeURI( s));
+        urlParams.set('query', window.btoa(s));
         urlParams.set('lang',document.getElementById("lang").value)
         document.getElementById('url').value=window.location.origin+window.location.pathname+'?'+urlParams
         //window.location.search = urlParams;
@@ -89,7 +89,10 @@ var editor = CodeMirror.fromTextArea(document.getElementById("area"), {
             .then((data)=>{
                 console.log(data)
                 if(data.code==0){
-                    document.getElementById("console").innerText=`${data.stdout[0].text}`
+                    for(var i=0;i<data.stdout.length;i++){
+                        document.getElementById("console").innerText+=`${data.stdout[i].text}\n`
+                    }
+                   // document.getElementById("console").innerText=`${data.stdout[0].text}`
                 }
                 else {
                     if(data.buildResult.stderr){
