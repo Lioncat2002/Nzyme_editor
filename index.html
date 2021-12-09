@@ -23,19 +23,23 @@
             <input type="text" id="url" class="white-text">
             <button class="waves-effect waves-light btn" onclick="share()">Share</button>
     </div>
-    <div class="card white">
+    <div class="card black">
         <div class="card-content">
             
             <br>
-            <label for="Language">Language</label>
-            <select id="lang">
-                <option value="-1" selected >Text</option>
-                <option value="0" >C</option>
-                <option value="1">C++</option>
-                <option value="2">Python</option>
-                <option value="3">Fortran</option>
-         
-              </select>
+            <label for="Language white-text">Language</label>
+            <div class="card grey darken-2">
+                <div class="card-content">
+                    <select id="lang">
+                        <option value="-1" selected >Text</option>
+                        <option value="0" >C</option>
+                        <option value="1">C++</option>
+                        <option value="2">Python</option>
+                        <option value="3">Fortran</option>
+                 
+                      </select>
+                </div>
+            </div>
             <textarea name="" style="min-height: 1000px;" id="area"></textarea>
             <button class="waves-effect waves-light btn" onclick="check()">Check</button>
         </div>
