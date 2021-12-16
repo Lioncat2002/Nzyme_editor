@@ -1,77 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="lib/codemirror.js"></script>
-    <link rel="stylesheet" href="lib/codemirror.css">
-    <script src="codemirror\codemirror-5.64.0\mode\python\python.js"></script>
-    <script src="codemirror\codemirror-5.64.0\mode\fortran\fortran.js"></script>
-    <link rel="stylesheet" href="codemirror\codemirror-5.64.0\theme\dracula.css">
-     <!-- Compiled and minified CSS -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-     <!-- Compiled and minified JavaScript -->
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-             
-    <title>console.log("Pastio");</title>
-</head>
-<body class="black">
-    <div class="card black">
-        <label for="share">Share Link</label>
-            <input type="text" id="url" class="white-text">
-            <button class="waves-effect waves-light btn" onclick="share()">Share</button>
-    </div>
-    <div class="card black">
-        <div class="card-content">
-            
-            <br>
-            <label for="Language white-text">Language</label>
-            <div class="card grey darken-2">
-                <div class="card-content">
-
-                    
-                    <select id="lang">
-                        <option value="-1" selected >Text</option>
-                        <option value="0" >C</option>
-                        <option value="1">C++</option>
-                        <option value="2">Python</option>
-                        <option value="3">Fortran</option>
-                 
-                      </select>
-                </div>
-            </div>
-            <textarea name="" style="min-height: 1000px;" id="area"></textarea>
-            <button class="waves-effect waves-light btn" onclick="check()">Check</button>
-        </div>
-    </div>
-    <div class="card black">
-        <div class="card-content">
-            <div class="card-title white-text">
-                Stdin
-            </div>
-            <textarea name="" class="white-text" style="min-height: 50px;" id="stdin"></textarea>
-        </div>
-    </div>
-    <div class="card black">
-        <div class="card-content">
-            <div class="card-title white-text">
-                Console
-            </div>
-                <div id="console" class="white-text">
-
-                </div>
-        </div>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-  var elems = document.querySelectorAll('select');
-  var instances = M.FormSelect.init(elems, {});
-});
-
-    </script>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="lib/codemirror.js"></script>
+        <link rel="stylesheet" href="lib/codemirror.css">
+        <script src="codemirror\codemirror-5.64.0\mode\python\python.js"></script>
+        <script src="codemirror\codemirror-5.64.0\mode\fortran\fortran.js"></script>
+        <link rel="stylesheet" href="codemirror\codemirror-5.64.0\theme\dracula.css">
+         <!-- Compiled and minified CSS -->
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     
-<script src="./js/executor.js" charset="utf-8"></script>
+         <!-- Compiled and minified JavaScript -->
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+             
+         
+         <!--User scripts-->
+         <script src="./src/dropdown.js"></script>
+         
+        <title>console.log("Pastio");</title>
+    </head>
+<body onload="checkForCode()">
+    
+    <div class="row">
+        <div class="col s6">
+            <!--Editor-->
+            <div class="card" style="min-height: 75vh;">
+                <div class="card-content">
+                    
+                    <!--Language selector start-->
+                    <label for="Language white-text">Language</label>
+
+                    <div class="card grey darken-2">
+                            <div class="card-content">
+
+                                <!--Language drop down-->
+                                <select id="lang">
+                                <option value="-1" selected >Text</option>
+                                <option value="0" >C</option>
+                                <option value="1">C++</option>
+                                <option value="2">Python</option>
+                                <option value="3">Fortran</option>
+                        
+                                </select>
+                            </div>
+                    </div>
+                    <!--Language selector end-->
+
+                    <!--Editor Start-->
+                      <label for="Editor">Editor</label>
+                      <button class="right waves-effect waves-light btn" 
+                       
+                      onclick="check()">Run</button>
+                      <br>
+                      <br>
+                      <textarea name="" id="area"></textarea>
+                      <!--Working on inline run button-->
+                     <!-- <div style="display: inline-flexbox;position:relative;">
+                            <button class="waves-effect waves-light btn" 
+                            style="position:absolute; right: 10px; top: 10px;" 
+                            onclick="check()">Run</button> 
+                    <textarea name="" id="area"></textarea>
+                      </div>-->
+                      
+                    <!--Editor end-->
+                </div>
+            </div>
+        </div>
+        <div class="col s6">
+            <!--Console-->
+            <div class="card" style="min-height: 75vh;">
+                <div class="card-content">
+                    <div class="card-title">
+                        <h3>Console</h3>
+                        <h5>StdIn</h5>
+                        <input type="text" id="stdin">
+                            
+                    </div>
+                    
+                    <div id="console">
+                        <!--Output area-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <footer>
+        <div class="container" >
+            <label for="Share">Share</label>
+            
+                    <input id="url" type="text">
+                
+                    <button class="right waves-effect waves-light btn" 
+                    onclick="share()">Share</button>
+      
+        </div>
+    </footer>
+    <!--Editor scripts-->
+    <script src="./src/editor.js"></script>
+
 </body>
 </html>
