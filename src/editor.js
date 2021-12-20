@@ -1,3 +1,19 @@
+const firebaseConfig = {
+    apiKey: "AIzaSyCm-w360K49K59PJir4yWj3uQ7mTEx2_6o",
+    authDomain: "pastio-code.firebaseapp.com",
+    projectId: "pastio-code",
+    storageBucket: "pastio-code.appspot.com",
+    messagingSenderId: "601913400286",
+    appId: "1:601913400286:web:c46c11195caceb9e209b4f",
+    measurementId: "G-F8909KM98V",
+    databaseURL:"https://pastio-code-default-rtdb.asia-southeast1.firebasedatabase.app/"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+
 var editor = CodeMirror.fromTextArea(document.getElementById("area"), {
     lineNumbers: true,
     styleActiveLine: true,
@@ -11,10 +27,24 @@ var editor = CodeMirror.fromTextArea(document.getElementById("area"), {
   function checkForCode(){
     const params=new URL(window.location.href)
 
-    var txt=params.searchParams.get("query")
-    var l=params.searchParams.get("lang")?params.searchParams.get("lang"):-1
-    document.getElementById("lang").value=l
-    editor.getDoc().setValue(txt?window.atob(txt):'');
+    var dbid=params.searchParams.get("query")
+    
+    var ref = firebase.database().ref();
+    var txt=''
+    var lang=''
+    ref.on("value", function(snapshot) {
+        console.log(snapshot.val()[dbid]["query"])
+     txt=snapshot.val()[dbid]["query"]
+     lang=snapshot.val()[dbid]["lang"]
+
+     document.getElementById("lang").value=parseInt(lang)
+     editor.getDoc().setValue(txt?window.atob(txt):'');
+     
+
+  }, function (error) {
+     console.log("Error: " + error.code);
+  });
+    
   }
 
   //Sharing function
@@ -22,8 +52,14 @@ var editor = CodeMirror.fromTextArea(document.getElementById("area"), {
     var s=editor.getValue()
     const urlParams = new URLSearchParams(window.location.search);
 
-    urlParams.set('query', window.btoa(s));
-    urlParams.set('lang',document.getElementById("lang").value)
+    var dbid=Math.round(new Date().getTime()/1000)+" "
+    
+    firebase.database().ref(dbid).set({
+        query:window.btoa(s),
+        lang:document.getElementById("lang").value
+    })
+    urlParams.set('query', dbid);
+    
     document.getElementById('url').value=window.location.origin+window.location.pathname+'?'+urlParams
     
     navigator.clipboard.writeText(window.location.origin+window.location.pathname+'?'+urlParams)
