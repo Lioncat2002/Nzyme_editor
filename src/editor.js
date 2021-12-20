@@ -28,12 +28,12 @@ var editor = CodeMirror.fromTextArea(document.getElementById("area"), {
     const params=new URL(window.location.href)
 
     var dbid=params.searchParams.get("query")
-    
+    document.getElementById("lang").value=params.searchParams.get("lang")
     var ref = firebase.database().ref();
     var txt=''
     var lang=''
     ref.on("value", function(snapshot) {
-        console.log(snapshot.val()[dbid]["query"])
+        
      txt=snapshot.val()[dbid]["query"]
      lang=snapshot.val()[dbid]["lang"]
 
@@ -59,7 +59,7 @@ var editor = CodeMirror.fromTextArea(document.getElementById("area"), {
         lang:document.getElementById("lang").value
     })
     urlParams.set('query', dbid);
-    
+    urlParams.set('lang', document.getElementById("lang").value);
     document.getElementById('url').value=window.location.origin+window.location.pathname+'?'+urlParams
     
     navigator.clipboard.writeText(window.location.origin+window.location.pathname+'?'+urlParams)

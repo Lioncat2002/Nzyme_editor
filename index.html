@@ -39,21 +39,17 @@
                     
                     <!--Language selector start-->
                     <label for="Language white-text">Language</label>
+                    <!--Language drop down-->
+                    <select id="lang">
+                        <option value="-1" selected >Text</option>
+                        <option value="0" >C</option>
+                        <option value="1">C++</option>
+                        <option value="2">Python</option>
+                        <option value="3">Fortran</option>
+                
+                        </select>
 
-                    <div class="card grey darken-2">
-                            <div class="card-content">
-
-                                <!--Language drop down-->
-                                <select id="lang">
-                                <option value="-1" selected >Text</option>
-                                <option value="0" >C</option>
-                                <option value="1">C++</option>
-                                <option value="2">Python</option>
-                                <option value="3">Fortran</option>
-                        
-                                </select>
-                            </div>
-                    </div>
+                    
                     <!--Language selector end-->
 
                     <!--Editor Start-->
@@ -64,20 +60,14 @@
                       <br>
                       <br>
                       <textarea name="" id="area"></textarea>
-                      <!--Working on inline run button-->
-                     <!-- <div style="display: inline-flexbox;position:relative;">
-                            <button class="waves-effect waves-light btn" 
-                            style="position:absolute; right: 10px; top: 10px;" 
-                            onclick="check()">Run</button> 
-                    <textarea name="" id="area"></textarea>
-                      </div>-->
+                     
                       
                     <!--Editor end-->
                 </div>
             </div>
         </div>
         <div class="col s6">
-            <!--Console-->
+            <!--Console Start-->
             <div class="card" style="min-height: 75vh;">
                 <div class="card-content">
                     <div class="card-title">
@@ -92,6 +82,7 @@
                     </div>
                 </div>
             </div>
+            <!--Console End-->
         </div>
         
     </div>
